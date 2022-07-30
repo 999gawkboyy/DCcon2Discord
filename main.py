@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtWidgets
 import chromedriver_autoinstaller
+from os import environ
 
 
 UI = uic.loadUiType("UI.ui")[0]
@@ -97,7 +98,14 @@ class MainWindow(QtWidgets.QMainWindow,UI):
     def startReadme(self):
         os.system('start ./Readme/ww.html')
 
+def suppress_qt_warnings():   # 해상도별 글자크기 강제 고정하는 함수
+    environ["QT_DEVICE_PIXEL_RATIO"] = "0"
+    environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+    environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+    environ["QT_SCALE_FACTOR"] = "1"
+
 if __name__ == '__main__':
+    suppress_qt_warnings()
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
