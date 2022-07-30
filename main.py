@@ -70,11 +70,19 @@ class MainWindow(QtWidgets.QMainWindow,UI):
                     imgtitle = im['title']
                     imgtitle = imgtitle.replace("?","")
                     dload.save(img, f'{self.folder}/{imgtitle}')
+                file = open(f'{self.folder}/{imgtitle}','rb')
+                magic = file.read(11)
+                file.close()
+                if magic.hex() == '47494638396164006400f7' :
+                    os.rename(f'{self.folder}/{imgtitle}',f'{self.folder}/{imgtitle}.gif')
+                elif magic.hex() == '89504e470d0a1a0a000000' :
+                    os.rename(f'{self.folder}/{imgtitle}',f'{self.folder}/{imgtitle}.jpg')
             driver.quit()
             self.errorornot.setStyleSheet(
                 "color: #4D69E8; border-style: solid; border-width: 2px; border-color: #54A0FF; border-radius: 10px; ")
             self.errorornot.setText("SUCCESS !!")
         except:
+            driver.quit()
             QMessageBox.critical(self, "Notice", "ERROR !!")
             self.errorornot.setStyleSheet(
                 "color: #FF0000; border-style: solid; border-width: 2px; border-color: #FFC300; border-radius: 10px; ")
