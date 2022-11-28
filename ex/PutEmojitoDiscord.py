@@ -2,7 +2,7 @@ from urllib import response
 import requests
 import base64
 from PIL import Image
-import GetToken
+from ex import GetToken
 
 def image_to_data_url(filename):
     ext = filename.split('.')[-1]
@@ -11,8 +11,7 @@ def image_to_data_url(filename):
         img = f.read()
     return prefix + base64.b64encode(img).decode('utf-8')
 
-def PutEmoji(email, pwd, channel, image):
-	token = GetToken.Get(email, pwd)
+def PutEmoji(name, channel, image, token) :
 
 	url = f'https://discord.com/api/v9/guilds/{channel}/emojis'
 	print(token)

@@ -88,7 +88,7 @@ class MainWindow(QtWidgets.QMainWindow,UI):
                 elif magic.hex() == '89504e470d0a1a0a000000' :
                     os.rename(f'{self.folder}/{imgtitle}',f'{self.folder}/{imgtitle}.jpg')
                     image = f'{self.folder}/{imgtitle}.jpg'
-                p.PutEmoji(email, pwd, channel, image)
+                p.PutEmoji(imgtitle, channel, image, token)
             driver.quit()
             self.errorornot.setStyleSheet(
                 "color: #4D69E8; border-style: solid; border-width: 2px; border-color: #54A0FF; border-radius: 10px; ")
@@ -131,9 +131,10 @@ class InputAccount(QDialog,QWidget, ui) :
         self.passwd.setEchoMode(QLineEdit.Password)
 
     def CloseTab(self) :
-        global email, pwd
+        global email, pwd, token
         email = self.email.text()
         pwd = self.passwd.text()
+        token = GetToken.Get(email, pwd)
         self.close()
 
 def suppress_qt_warnings():   # 해상도별 글자크기 강제 고정하는 함수
