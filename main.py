@@ -14,10 +14,12 @@ from PyQt5.QtGui import *
 from PyQt5 import QtWidgets
 import chromedriver_autoinstaller
 from os import environ
+from ex import PutEmojitoDiscord as p
+from ex import GetToken
 
+email, pwd, channel, token = '','','',''
 
 UI = uic.loadUiType("UI.ui")[0]
-
 class MainWindow(QtWidgets.QMainWindow,UI):
     def __init__(self):
         super().__init__()
@@ -34,6 +36,7 @@ class MainWindow(QtWidgets.QMainWindow,UI):
         self.errorornotStyle()
         self.success = False
         self.Readme.clicked.connect(self.startReadme)
+        self.AnalysisToken.clicked.connect(self.InputAcc)
 
     def initUI(self):
         self.setupUi(self)
@@ -51,13 +54,18 @@ class MainWindow(QtWidgets.QMainWindow,UI):
         self.selectDir.setIconSize(QSize(31,31))
 
     def saveImg(self):
+        global channel
+        channel = self.channel.text()
         try :
             chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
+            options = webdriver.ChromeOptions()
+            options.add_argument('headless')
             try:
-                driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe')
+                driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe',chrome_options=options)
             except:
                 chromedriver_autoinstaller.install(True)
-                driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe')
+                driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe',chrome_options=options)
+            driver = webdriver.Chrome(chrome_options=options)
             driver.get(self.URL.toPlainText())
             req = driver.page_source
             soup = BeautifulSoup(req, 'html.parser')
@@ -76,8 +84,11 @@ class MainWindow(QtWidgets.QMainWindow,UI):
                 file.close()
                 if magic.hex() == '47494638396164006400f7' :
                     os.rename(f'{self.folder}/{imgtitle}',f'{self.folder}/{imgtitle}.gif')
+                    image = f'{self.folder}/{imgtitle}.gif'
                 elif magic.hex() == '89504e470d0a1a0a000000' :
                     os.rename(f'{self.folder}/{imgtitle}',f'{self.folder}/{imgtitle}.jpg')
+                    image = f'{self.folder}/{imgtitle}.jpg'
+                p.PutEmoji(email, pwd, channel, image)
             driver.quit()
             self.errorornot.setStyleSheet(
                 "color: #4D69E8; border-style: solid; border-width: 2px; border-color: #54A0FF; border-radius: 10px; ")
@@ -97,6 +108,33 @@ class MainWindow(QtWidgets.QMainWindow,UI):
 
     def startReadme(self):
         os.system('start ./Readme/ww.html')
+
+    def InputAcc(self) :
+        self.second = InputAccount()
+        self.second.exec()
+
+ui = uic.loadUiType('token.ui')[0]
+class InputAccount(QDialog,QWidget, ui) :
+    def __init__(self) :
+        super().__init__()
+        self.setupUi(self)
+        self.setFixedSize(465, 257)
+        self.setWindowTitle("Get Token")
+        self.show()
+        self.startAnalysis.setStyleSheet(
+                "color: white; border-style: solid; border-width: 2px; border-radius: 10px; background-color: blue;")
+        self.email.setStyleSheet(
+                "color: white; border-style: solid; border-width: 2px; border-radius: 10px; background-color: #000000;")   
+        self.passwd.setStyleSheet(
+                "color: white; border-style: solid; border-width: 2px; border-radius: 10px; background-color: #000000;")  
+        self.startAnalysis.clicked.connect(self.CloseTab)
+        self.passwd.setEchoMode(QLineEdit.Password)
+
+    def CloseTab(self) :
+        global email, pwd
+        email = self.email.text()
+        pwd = self.passwd.text()
+        self.close()
 
 def suppress_qt_warnings():   # 해상도별 글자크기 강제 고정하는 함수
     environ["QT_DEVICE_PIXEL_RATIO"] = "0"

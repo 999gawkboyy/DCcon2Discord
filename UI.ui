@@ -271,8 +271,8 @@
   <widget class="QPushButton" name="Readme">
    <property name="geometry">
     <rect>
-     <x>430</x>
-     <y>290</y>
+     <x>420</x>
+     <y>240</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -291,7 +291,7 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>260</y>
+     <y>210</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -311,7 +311,7 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>300</y>
+     <y>250</y>
      <width>64</width>
      <height>15</height>
     </rect>
@@ -324,6 +324,71 @@
    </property>
    <property name="text">
     <string>╰─&gt; </string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="channel">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>360</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>350</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Channel ID :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>280</y>
+     <width>181</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei UI</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Discord Token :</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="AnalysisToken">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>290</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>input</string>
    </property>
   </widget>
  </widget>
