@@ -18,7 +18,7 @@ def Get(email, pwd) :
             chromedriver_autoinstaller.install(True)
             driver = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe')
         options = webdriver.ChromeOptions()
-        # options.add_argument('headless')
+        options.add_argument('headless')
         options.add_argument('window-size=1920x1080')
         options.add_argument("--incognito")
         mobile_emulation = { "deviceName": "iPhone X" }
