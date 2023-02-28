@@ -1,8 +1,6 @@
 from urllib import response
 import requests
 import base64
-from PIL import Image
-from ex import GetToken
 
 def image_to_data_url(filename):
     ext = filename.split('.')[-1]
